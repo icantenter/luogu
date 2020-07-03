@@ -12,7 +12,7 @@ int main()
         "pqrs", "tuv",  "wxyz", 
         "*",    " ",    "#"};
     getline(std::cin , msg);
-
+    //std::map<int, std::string> ke; 
     for (std::string::iterator i = msg.begin(); i < msg.end(); i++)
     {
         for (int j = 0; j < 12; j++)
