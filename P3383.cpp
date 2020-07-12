@@ -22,8 +22,8 @@ inline void FindPrime(int limit, int prime[])
         for (int j = 0; i * prime[j] < limit; j++)
         {
             all[i * prime[j]] = 0;
-            if (i % prime[j] == 0)
-            {
+            if (i % prime[j] == 0) //例如: 315=3×3×5×7; 因为去掉的合数结构是最小质因数 * 最大因数。
+            {                       //315应该由3 * (3 * 5 * 7)去掉, 3后面是5,结构不对
                 break;
             }
         }
