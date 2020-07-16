@@ -15,8 +15,8 @@ inline void FindPrime(int limit, int prime[])
     
     for (int i = 2; i < limit; i++)
     {
-        if (all[i])
-        {
+        if (all[i])//in:需要的质数范围，范围之前的质数表
+        {           //out:加上了所给范围内质数的质数表
             prime[counter++] = i;
         }
         for (int j = 0; i * prime[j] < limit; j++)
