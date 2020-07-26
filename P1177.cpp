@@ -1,10 +1,13 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
+#include <cassert>
 typedef int Comparable;
 Comparable nums[1000001];
 void q_sort(int low, int high);
 
+template<typename Comparable>
+bool is_sorted(Comparable array[], int size);
 int main()
 {
     Comparable num;
@@ -20,6 +23,7 @@ int main()
         std::cout << nums[i] << ' ';
     }
     std::cout << nums[num - 1] << std::endl;
+    assert(is_sorted(nums, num));
     return 0;
 }
 
@@ -71,4 +75,17 @@ void q_sort(int low, int high)
     q_sort(low, j);
     q_sort(j + 1, high);
     
+}
+
+template<typename Comparable>
+bool is_sorted(Comparable array[], int size)
+{
+    for (int i = 0; i < size - 1; i++)
+    {
+        if (array[i] > array[i + 1])
+        {
+            return false;
+        }
+    }
+    return true;
 }
