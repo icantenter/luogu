@@ -8,11 +8,18 @@ void q_sort(int low, int high);
 
 template<typename Comparable>
 bool is_sorted(Comparable array[], int size);
+
+
+template<typename Comparable>
+void show(Comparable array[], int size);
+
+int N;
 int main()
 {
     Comparable num;
 
     std::cin >> num;
+    N = num;
     for (int i = 0; i < num; i++) 
     {
         scanf("%d", nums + i);
@@ -68,13 +75,60 @@ void q_sort(int low, int high)
         temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;
+        show(nums, N);
     }
     temp = nums[j];
     nums[j] = nums[low];
     nums[low] = temp;
+    show(nums, N);
     q_sort(low, j);
     q_sort(j + 1, high);
     
+}
+
+
+template<typename Comparable>
+void show(Comparable array[], int size)
+{
+    
+    if (size == 0)
+    {
+        return ;
+    }
+    system("cls");
+    int max = array[0];
+    for (int i = 1; i < size; i++) 
+    {
+        if (array[i] > max)
+        {
+            max = array[i];
+        }
+    }
+    for (int i = max; i > 0; i--) 
+    {
+        for (int j = 0; j < size; j++) 
+        {
+            if (array[j] >= i)
+            {
+                std::cout << "■";
+            }
+            else
+            {
+                std::cout << "  ";
+            }
+            if (j == size - 1)
+            {
+                std::cout << std::endl;
+            }
+            else
+            {
+                std::cout << "  ";
+            }
+            
+        }
+        
+    }
+    system("pause");
 }
 
 template<typename Comparable>
