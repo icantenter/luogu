@@ -11,7 +11,7 @@ inline void FindPrime(int limit, int prime[])
     for (int i = 0; i < limit; i++)
     {
         all[i] = 1;
-    }
+    }//不初始化效率更高，但可能不安全
     
     for (int i = 2; i < limit; i++)
     {
@@ -19,7 +19,7 @@ inline void FindPrime(int limit, int prime[])
         {           //out:加上了所给范围内质数的质数表
             prime[counter++] = i;
         }
-        for (int j = 0; i * prime[j] < limit; j++)
+        for (int j = 0; j < counter && i * prime[j] < limit; j++)
         {
             all[i * prime[j]] = 0;
             if (i % prime[j] == 0) //例如: 315=3×3×5×7; 因为去掉的合数结构是最小质因数 * 最大因数。
@@ -34,7 +34,7 @@ inline void FindPrime(int limit, int prime[])
 int main()
 {
     //找出范围最大max以内的素数(质数)
-    int prime[1000000];
+    int prime[6000010];
     int limit, q;
     int *ans;
 
