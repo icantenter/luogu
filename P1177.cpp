@@ -2,9 +2,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
-typedef int Comparable;
-Comparable nums[1000001];
-void qsort(int low, int high);
+typedef int value_type;
+template <typename Comparable>
+void qsort(Comparable nums[], int low, int high);
 
 template <typename Comparable>
 bool is_sorted(Comparable array[], int size);
@@ -15,7 +15,8 @@ void show(Comparable array[], int size);
 int N;
 int main()
 {
-    Comparable num;
+    value_type num;
+    value_type nums[100000];
 
     std::cin >> num;
     N = num;
@@ -23,7 +24,7 @@ int main()
     {
         scanf("%d", nums + i);
     }
-    qsort(0, num - 1);
+    qsort(nums, 0, num - 1);
     for (int i = 0; i < num - 1; i++)
     {
         std::cout << nums[i] << ' ';
@@ -33,14 +34,15 @@ int main()
     return 0;
 }
 
-void qsort(int low, int high)
+template <typename Comparable>
+void qsort(Comparable nums[], int low, int high)
 {
     if (low >= high)
     {
         return ;
     }
     int i = low, j = high;
-    int mid = nums[rand() % (high - low + 1) + low];
+    Comparable mid = nums[rand() % (high - low + 1) + low];
     do
     {
         while (nums[j] > mid)
@@ -55,8 +57,8 @@ void qsort(int low, int high)
         }
     } while (i <= j);
     //快排后数组被划分为三块，且满足low<=j<=i<=high
-    qsort(low, j); //在左区间排序
-    qsort(i, high); //在右区间排序
+    qsort(nums, low, j); //在左区间排序
+    qsort(nums, i, high); //在右区间排序
 }
 
 template <typename Comparable>
