@@ -42,12 +42,12 @@ void qsort(Comparable nums[], int low, int high)
         return ;
     }
     int i = low, j = high;
-    Comparable mid = nums[rand() % (high - low + 1) + low];
+    Comparable pivot = nums[rand() % (high - low + 1) + low];
     do
     {
-        while (nums[j] > mid)
+        while (nums[j] > pivot)
             j--;
-        while (nums[i] < mid)
+        while (nums[i] < pivot)
             i++;
         if (i <= j)
         {
