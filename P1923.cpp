@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <cstdio>
 int k;
 typedef int value_type;
 
@@ -12,7 +14,7 @@ int main()
     std::cin >> n >> k;
     for (int i = 0; i < n; i++)
     {
-        std::cin >> nums[i];
+        scanf("%d", nums + i);
     }
     qsort(nums, 0, n - 1);
     return 0;
@@ -21,9 +23,11 @@ int main()
 template <typename Comparable>
 void qsort(Comparable nums[], int low, int high)
 {
-    if (low >= high)
+    //caution:查找和排序不同
+    if (low == high)
     {
-        return;
+        printf("%d", nums[low]);
+        return ;
     }
     int i = low, j = high;
     Comparable mid = nums[rand() % (high - low + 1) + low];
@@ -48,7 +52,6 @@ void qsort(Comparable nums[], int low, int high)
     else
     {
         printf("%d", nums[j + 1]);
-        exit(0);
     }
 }
 
