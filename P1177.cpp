@@ -4,13 +4,12 @@
 #include <cassert>
 typedef int Comparable;
 Comparable nums[1000001];
-void q_sort(int low, int high);
+void qsort(int low, int high);
 
-template<typename Comparable>
+template <typename Comparable>
 bool is_sorted(Comparable array[], int size);
 
-
-template<typename Comparable>
+template <typename Comparable>
 void show(Comparable array[], int size);
 
 int N;
@@ -20,12 +19,12 @@ int main()
 
     std::cin >> num;
     N = num;
-    for (int i = 0; i < num; i++) 
+    for (int i = 0; i < num; i++)
     {
         scanf("%d", nums + i);
     }
-    q_sort(0, num);
-    for (int i = 0; i < num - 1; i++) 
+    qsort(0, num - 1);
+    for (int i = 0; i < num - 1; i++)
     {
         std::cout << nums[i] << ' ';
     }
@@ -34,79 +33,52 @@ int main()
     return 0;
 }
 
-//high可能取size或size - 1，改动时注意后面递归
-void q_sort(int low, int high)
+void qsort(int low, int high)
 {
-    if (high - 1 <= low)
+    if (low >= high)
     {
         return ;
     }
-    //key选择左边第一个或右边第一个
-    //左边的key应与nums[j]交换,反之与nums[i].
-    //打乱可以是排序前，但key不能
-    int index = rand() % (high - low) + low;
-    int i = low;
-    int j = high;
-    int temp = nums[low];
-    nums[low] = nums[index];
-    nums[index] = temp;
-    int key = nums[low];
-    while (true)
+    int i = low, j = high;
+    int mid = nums[rand() % (high - low + 1) + low];
+    do
     {
-        while (key > nums[++i])
+        while (nums[j] > mid)
+            j--;
+        while (nums[i] < mid)
+            i++;
+        if (i <= j)
         {
-            if (i == high)
-            {
-                break;
-            }
-            
+            std::swap(nums[i], nums[j]);
+            i++;
+            j--;
         }
-        while (key < nums[--j])
-        {
-            if (j == low)
-            {
-                break;
-            }
-        }
-        if (i >= j)
-        {
-            break;
-        }
-        temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
-        show(nums, N);
-    }
-    temp = nums[j];
-    nums[j] = nums[low];
-    nums[low] = temp;
-    show(nums, N);
-    q_sort(low, j);
-    q_sort(j + 1, high);
-    
+    } while (i <= j);
+    //快排后数组被划分为三块，且满足low<=j<=i<=high
+    qsort(low, j); //在左区间排序
+    qsort(i, high); //在右区间排序
 }
 
-
-template<typename Comparable>
+template <typename Comparable>
 void show(Comparable array[], int size)
 {
-    
+
     if (size == 0)
     {
-        return ;
+        return;
     }
     system("cls");
     int max = array[0];
-    for (int i = 1; i < size; i++) 
+    for (int i = 1; i < size; i++)
     {
         if (array[i] > max)
         {
             max = array[i];
         }
     }
-    for (int i = max; i > 0; i--) 
+    for (int i = max; i > 0; i--)
     {
-        for (int j = 0; j < size; j++) 
+        for (int j = 0; j < size; j++)
         {
             if (array[j] >= i)
             {
@@ -124,14 +96,12 @@ void show(Comparable array[], int size)
             {
                 std::cout << "  ";
             }
-            
         }
-        
     }
     system("pause");
 }
 
-template<typename Comparable>
+template <typename Comparable>
 bool is_sorted(Comparable array[], int size)
 {
     for (int i = 0; i < size - 1; i++)
