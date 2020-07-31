@@ -12,25 +12,27 @@ int main()
     return 0;
 }
 
+//首要的是可读性，其次是运行
 std::string add(std::string a, std::string b)
 {
     int offset = 0;
+    std::string ans;
     a.length() > b.length()? FillVacancy(b, a.length()):FillVacancy(a, b.length());
-    for (int i = a.length() - 1; i >= 0; i--)
+    for (int i = a.length() - 1; i >= 0 ; i--)
     {
         int temp;
 
         temp = a[i] - '0' + b[i] - '0' + offset;
         offset = temp / 10;
         temp %= 10;
-        a[i] = char('0' + temp);
+        ans = char('0' + temp) + ans;
     }
     if (offset)
     {
-        a = char(offset + '0') + a;
+        ans = char(offset + '0') + ans;
     }
     
-    return a;
+    return ans;
 }
 //补位使两个数能对齐，循环处理更方便
 void FillVacancy(std::string& temp, int length)

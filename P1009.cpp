@@ -1,16 +1,23 @@
 #include <iostream>
 #include <string>
 
-void FillVacancy(std::string &temp, int length);
-std::string mul(std::string a, std::string b);
 std::string add(std::string a, std::string b);
-
+std::string mul(std::string a, std::string b);
 int main()
 {
-    std::string a, b;
-    //getline有时候会有点问题
-    std::cin >> a >> b;
-    std::cout << mul(a, b);
+    int N;
+    std::string ans, temp;
+    std::cin >> N;
+
+    temp = '1';
+    ans = '0';
+    for (int i = 1; i <= N; i++) 
+    {
+        temp = mul(temp, std::to_string(i));
+        ans = add(ans, temp);
+    }
+    
+    std::cout << ans;
     return 0;
 }
 
@@ -51,13 +58,20 @@ std::string mul(std::string a, std::string b)
     
     return ans;
 }
-
+//补位使两个数能对齐，循环处理更方便
+void FillVacancy(std::string& temp, int length)
+{
+    while (temp.length() < length)
+    {
+        temp = '0' + temp;
+    }
+}
 
 //首要的是可读性，其次是运行
 std::string add(std::string a, std::string b)
 {
     int offset = 0;
-    std::string ans;
+
     a.length() > b.length()? FillVacancy(b, a.length()):FillVacancy(a, b.length());
     for (int i = a.length() - 1; i >= 0 ; i--)
     {
@@ -66,20 +80,12 @@ std::string add(std::string a, std::string b)
         temp = a[i] - '0' + b[i] - '0' + offset;
         offset = temp / 10;
         temp %= 10;
-        ans = char('0' + temp) + ans;
+        a[i] = char('0' + temp);
     }
     if (offset)
     {
-        ans = char(offset + '0') + ans;
+        a = char(offset + '0') + a;
     }
     
-    return ans;
-}
-//补位使两个数能对齐，循环处理更方便
-void FillVacancy(std::string& temp, int length)
-{
-    while (temp.length() < length)
-    {
-        temp = '0' + temp;
-    }
+    return a;
 }
