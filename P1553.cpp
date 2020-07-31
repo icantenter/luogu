@@ -45,32 +45,24 @@ int main()
 
 void trim_front(std::string &src)
 {
-    if (src == "0")
+    for (int i = 0; ; i++) 
     {
-        return;
-    }
-    for (std::string::iterator i = src.begin(); i < src.end(); i++)
-    {
-        if (*i != '0')
+        if (src[i] != '0' || i == src.length() - 1)
         {
-            src = std::string(i, src.end());
-            break;
+            src = src.substr(i);
+            return ;
         }
     }
 }
 
 void trim_behind(std::string &src)
 {
-    if (src == "0")
+    for (int i = src.length() - 1; ; i--) 
     {
-        return;
-    }
-    for (std::string::iterator i = src.end() - 1; i >= src.begin(); i--)
-    {
-        if (*i != '0')
+        if (src[i] != '0' || i == 0)
         {
-            src = std::string(src.begin(), i + 1);
-            break;
+            src = src.substr(i);
+            return ;
         }
     }
 }
