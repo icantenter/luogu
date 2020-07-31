@@ -24,19 +24,22 @@ std::string mul(std::string a, std::string b)
         offset = 0;
         //初始当前乘数的位数
         std::string temp(a.length() - i - 1, '0');
+
         for (int j = b.length() - 1; j >= 0; j--)
-        {
+        {       //这里加法类似
             _temp = (a[i] - '0') * (b[j] - '0') + offset;
             offset = _temp / 10;
             _temp %= 10;
             temp = char('0' + _temp) + temp;
         }
+        //最后的offset要加上
         if (offset)
         {
             temp = char(offset + '0') + temp;
         }
         ans = add(ans, temp);
     }
+    //trim无意义的0
     for (int i = 0; ; i++) 
     {
         if (ans[i] != '0' || i == ans.length() - 1)
