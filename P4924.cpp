@@ -1,104 +1,82 @@
 #include <iostream>
-#include <cmath>
-#define size 510
-
-struct BinaryInt
-{
-    int x, y;
-    BinaryInt(int _x, int _y)
-    {
-        x = _x;
-        y = _y;
-    }
-};
-typedef BinaryInt Point;
-
-struct _M_Rect
-{
-    int x, y;
-    int w, h;
-    /*_M_Rect(int _x, int _y, int _w, int _h)
-    {
-        x = _x;
-        y = _y;
-        w = _w;
-        h = _h;
-    }*/
-};
-
-void spin(int nums[][size], _M_Rect* rect, bool _clockwise);
-
+#include <vector>
+int sq[505][505], tmp[505][505];
+void r_spin(int x, int y,int r);
+void l_spin(int x, int y,int r);
 int main()
 {
-    typedef _M_Rect Rect;
-    int n, m;
-    int nums[size][size];
-    int cnt = 1;
-    std::cin >> n >> m;
+    int m, n, t = 0;
+    int x, y, r, z;
 
-    for (int i = 0; i < n; i++)
+    std::cin >> n >> m;
+    for (int i = 1; i <= n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = 1; j <= n; j++)
         {
-            nums[i][j] = cnt++;
+            sq[i][j] = ++t;
         }
     }
-    for (int i = 0; i < m; i++)
+    
+    for (int i = 0; i < m; i++) 
     {
-        int x, y, r, z;
-
         std::cin >> x >> y >> r >> z;
         if (z)
-        {
-            _M_Rect temp{x - r, y - r, 2 * r + 1, 2 * r + 1};
-            spin(nums, &temp, true);
-        }
+            l_spin(x, y, r);
         else
         {
-            _M_Rect temp{x - r, y - r, 2 * r + 1, 2 * r + 1};
-            spin(nums, &temp, false);
+            r_spin(x, y, r);
         }
     }
-    for (int i = 0; i < n; i++)
+    
+    
+    for (int i = 1; i <= n; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = 1; j <= n; j++)
         {
-            std::cout << nums[i][j] << ' ';
+            printf("%d ",sq[i][j]);
         }
-        std::cout << std::endl;
+        putchar('\n');
     }
     return 0;
 }
 
-void spin(int nums[][size], _M_Rect* rect, bool _clockwise = true)
+
+void r_spin(int x, int y,int r)
 {
-    int temp[size][size];
-    //temp存放spin前的数组
-    for (int j = rect->y; j <= rect->y + rect->h; j++)
+
+    for (int i = x - r; i <= x + r; i++)
     {
-        for (int i = rect->x; i <= rect->x + rect->w; i++)
+        for (int j = y - r; j <= y + r ; j++)
         {
-            temp[j][i] = nums[j][i];
+            tmp[j - y + x][-1 * (i - x) + y] = sq[i][j];
         }
     }
-    if (_clockwise)
+    for (int i = x - r; i <= x + r; i++)
     {
-        for (int j = rect->y; j <= rect->y + rect->h; j++)
+        for (int j = y - r; j <= y + r ; j++)
         {
-            for (int i = rect->x; i <= rect->x + rect->w; i++)
-            {
-                nums[j][i] = temp[rect->y + rect->h - i][rect->x + j];
-            }
+            sq[i][j] = tmp[i][j];
         }
     }
-    else
+    
+}
+
+void l_spin(int x, int y,int r)
+{
+
+    for (int i = x - r; i <= x + r; i++)
     {
-        for (int j = rect->y; j <= rect->y + rect->h; j++)
+        for (int j = y - r; j <= y + r ; j++)
         {
-            for (int i = rect->x; i <= rect->x + rect->w; i++)
-            {
-                nums[j][i] = temp[rect->x + j][rect->y + rect->h - i];
-            }
+            tmp[i][j] = sq[j - y + x][-1 * (i - x) + y];
         }
     }
+    for (int i = x - r; i <= x + r; i++)
+    {
+        for (int j = y - r; j <= y + r ; j++)
+        {
+            sq[i][j] = tmp[i][j];
+        }
+    }
+    
 }
